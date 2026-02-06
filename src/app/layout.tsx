@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
+import Script from "next/script"; // Import the Script component
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,16 +16,33 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        {/* Google Tag (gtag.js) - External Script */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-NYWG9R5XJB"
+          strategy="afterInteractive"
+        />
+        {/* Google Tag (gtag.js) - Inline Initialization */}
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-NYWG9R5XJB');
+          `}
+        </Script>
+      </head>
       <body className={`${inter.className} bg-white text-gray-900 flex flex-col min-h-screen`}>
         <Navbar />
         
         <main className="flex-grow pt-16">{children}</main>
 
-        {/* UPDATED FOOTER - USING footer_logo.svg */}
+        {/* FOOTER */}
         <footer className="bg-gray-900 text-gray-300 border-t border-gray-800 pt-16 pb-8">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
             
-            {/* BRAND COLUMN - USES YOUR NEW SVG LOGO */}
+            {/* BRAND COLUMN */}
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center mb-6">
                 <Image 
